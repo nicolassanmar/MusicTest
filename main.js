@@ -1,4 +1,4 @@
-var from, to, currentBeat, loopBeat, kickDraw, sampler, logo;
+var from, to, currentBeat, loopBeat, kickDraw, sampler, logo, perspectiva;
 
 var pos, target, vel, r, drag, strength;
 
@@ -6,7 +6,6 @@ var startbutton = 0;
 
 var KICKLENGTH;
 
-var nota = 261.63;
 
 var bass, clarinet, plucks, hold, drums, violin, voice;
 
@@ -16,8 +15,9 @@ var voiceVolume = bassVolume = 1;
 var button;
 var voiceSlider;
 var loaded = false;
-
+var cursormio;
 function preload() {
+  
   bass = new Tone.Player("Fl studio/bass.wav").toMaster();
   drums = new Tone.Player("Fl studio/drums.wav").toMaster();
   clarinet = new Tone.Player("Fl studio/clarinet.wav").toMaster();
@@ -26,6 +26,8 @@ function preload() {
   voice = new Tone.Player("Fl studio/voice.wav").toMaster();
   violin = new Tone.Player("Fl studio/violin.wav").toMaster();
   logof();
+ //perspectiva = loadImage("perspective.svg")
+ //cursormio = loadImage('cursor.png');
 }
 function logof() {
   logo = loadImage("Nicox-Logo.png");
@@ -34,7 +36,8 @@ function logof() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  KICKLENGTH = windowHeight * 0.8;
+  cursor('cursor.png',8,8);
+  KICKLENGTH = 800;
 
   loopBeat = new Tone.Loop(song, "4n");
   Tone.Transport.bpm.value = 95;
@@ -86,10 +89,10 @@ function draw() {
   if (kickDraw > 0) {
     push();
     fill(from);
-    if (kickDraw > KICKLENGTH - 10) {
-      target = kickDraw;
+    if (kickDraw > KICKLENGTH - 20) {
+      target = 80;
     } else {
-      target = 0;
+      target = kickDraw;
     }
     //spring
     var force = target - pos;
@@ -98,13 +101,16 @@ function draw() {
     vel += force;
     pos += vel;
 
-    if (pos > windowHeight * 0.05) {
-      rect(windowWidth / 2, windowHeight / 2, pos, pos);
-    }
-
+    
+      //rect(windowWidth / 2, windowHeight / 2, pos, pos);
+      
+      bezier(5,windowHeight-5,windowWidth,windowHeight,pos,pos/4,windowWidth,0);
+      bezier(0,windowHeight,pos,pos/4,0,0,windowWidth,0);
     kickDraw--;
     pop();
+    //image(perspectiva,0,0,windowWidth,windowHeight);
     image(logo, 0, windowHeight - 100, 100, 100);
+
   }
 }
 
