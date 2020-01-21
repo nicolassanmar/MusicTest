@@ -32,8 +32,7 @@ function logof() {
 }
 
 function setup() {
-  var cnv = createCanvas(windowWidth, windowHeight);
-  cnv.style('display', 'block');
+  createCanvas(windowWidth, windowHeight);
 
   KICKLENGTH = windowHeight * 0.8;
 
@@ -69,6 +68,8 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(windowWidth,windowHeight);
+  KICKLENGTH = windowHeight * 0.8;
+
 }
 
 function draw() {

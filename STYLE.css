@@ -1,4 +1,11 @@
-  
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+
+div{
+font-family: 'Raleway', sans-serif;
+
+}
+ 
 html, body {
   margin: 0;
   padding: 0;
@@ -9,3 +16,7 @@ canvas {
 }
 
 
+#p5_loading {
+  padding: 70px 0;
+  text-align: center;
+}
