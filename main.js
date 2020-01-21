@@ -32,7 +32,8 @@ function logof() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  var cnv = createCanvas(windowWidth, windowHeight);
+  cnv.style('display', 'block');
 
   KICKLENGTH = windowHeight * 0.8;
 
