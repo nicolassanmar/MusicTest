@@ -67,10 +67,6 @@ function setup() {
   drag = 0.75;
   strength = 0.1;
 
-  // button = createButton('play');
-  // button.position(10, windowHeight/2);
-  // button.mousePressed(playf);
-
   voiceSliderM = 0;
   voiceModifying = false;
 
@@ -212,7 +208,6 @@ function playf() {
       Tone.Transport.start();
       loopBeat.start(0);
       startbutton++;
-      button.html("stop");
     } else {
       Tone.Transport.stop();
       loopBeat.stop(0);
@@ -225,7 +220,6 @@ function playf() {
       hold.stop();
       violin.stop();
       plucks.stop();
-      button.html("play");
     }
   }
 }
