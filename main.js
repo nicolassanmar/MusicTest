@@ -21,6 +21,8 @@ var startingfade;
 
 var cnv;
 
+var rando1, randoColor, rando3, cantidadAsteriscos, PALETTE;
+
 function preload() {
   bass = new Tone.Player("Fl studio/bass.wav").toMaster();
   drums = new Tone.Player("Fl studio/drums.wav").toMaster();
@@ -76,6 +78,8 @@ function setup() {
   //     headphones.bounds.height / 2
   //   );
   // });
+
+  PALETTE = ["#78417a", "#af74aa", "#eb5461", "#ed7567", "#f08e51"]; // violeta oscuro, violeta claro, rojo, naranja palido, naranja
 }
 
 function windowResized() {
@@ -102,6 +106,25 @@ function draw() {
     if (currentBeat[1] % 2 == 0) {
       kickDraw = KICKLENGTH;
     }
+    
+    //asteriscos
+    push();
+    translate(-windowWidth, 0);
+    translate((windowWidth * rando3) / 15, (windowHeight * rando3) / 15);
+    for (let cantidadFilas = 0; cantidadFilas < 6; cantidadFilas++) {
+      
+      push();
+      for (let ndea = 0; ndea < cantidadAsteriscos + 2; ndea++) {
+        drawRandom();
+        translate(
+          windowWidth / cantidadAsteriscos + 2,
+          windowHeight / cantidadAsteriscos + 2
+        );
+      }
+      pop();
+      translate((windowWidth) / 3, 0);
+    }
+    pop();
 
     if (kickDraw > 0) {
       push();
@@ -120,27 +143,28 @@ function draw() {
 
       //rect(windowWidth / 2, windowHeight / 2, pos, pos);
 
-      bezier(
-        5,
-        windowHeight - 5,
-        windowWidth,
-        windowHeight,
-        pos,
-        pos / 4,
-        windowWidth,
-        0
-      );
-      bezier(0, windowHeight, pos, pos / 4, 0, 0, windowWidth, 0);
-      kickDraw--;
+      // bezier(
+      //   5,
+      //   windowHeight - 5,
+      //   windowWidth,
+      //   windowHeight,
+      //   pos,
+      //   pos / 4,
+      //   windowWidth,
+      //   0
+      // );
+      // bezier(0, windowHeight, pos, pos / 4, 0, 0, windowWidth, 0);
+      // kickDraw--;
       pop();
 
       //voice slider
+      fill(75);
+      rect((windowWidth * 1.61) / 2 + 5,  0 + 3, windowWidth / 20  , windowHeight / 7 + voiceSliderM);
       fill(to);
-      rect(
-        (windowWidth * 1.61) / 2,0, windowWidth / 20,
-        windowHeight / 7 + voiceSliderM
-      );
+      rect((windowWidth * 1.61) / 2,  0, windowWidth / 20, windowHeight / 7 + voiceSliderM);
     }
+
+
     imageMode(CORNER);
     image(logo, 0, windowHeight - 70, 70, 70);
     if (startingfade > 0) {
@@ -176,6 +200,29 @@ function draw() {
   }
 }
 
+function drawRandom() {
+  push();
+  let sides, equis, yi, largoVoice;
+  if (rando1 > 0.5) {
+    sides = 6;
+  } else {
+    sides = 12;
+  }
+  fill(randoColor);
+  noStroke;
+  //translate(windowWidth/2,windowHeight/2);
+
+  largoVoice = map(voiceSliderM, 0, 749, 1, 2);
+  rotate(PI * rando3);
+
+  for (let i = 0; i < sides; i++) {
+    rect(0, 0, (windowWidth * largoVoice) / 20, windowHeight / 50);
+    rotate((PI * 2) / sides);
+  }
+
+  pop();
+}
+
 function mousePressed() {
   let c = get(mouseX, mouseY);
   if (c[0] == 0 && c[1] == 0 && c[2] == 0) {
@@ -206,6 +253,10 @@ function playf() {
       Tone.Transport.start();
       loopBeat.start(0);
       startbutton++;
+      rando1 = random(1);
+      randoColor = random(PALETTE);
+      rando3 = random(1);
+      rando4 = random(1);
     } else {
       Tone.Transport.stop();
       loopBeat.stop(0);
@@ -223,6 +274,11 @@ function playf() {
 }
 
 function song(time) {
+
+  if (currentBeat[0] % 8 == 7 && currentBeat[1] == 3) {
+    mouseReleased();
+  }
+
   currentBeat = split(Tone.Transport.position, ":");
   if (currentBeat[0] % 8 == 0 && currentBeat[1] == 0) {
     bass.start();
@@ -233,6 +289,11 @@ function song(time) {
     hold.start();
     violin.start();
   }
+  rando1 = random(1);
+  randoColor = random(PALETTE);
+  rando3 = random(1);
+  cantidadAsteriscos = ceil(random(2,8));
+
   /*  
   if (currentBeat[1] == "0") {
     bass.triggerAttackRelease("D1", "4n", time, 0.2);
@@ -241,5 +302,5 @@ function song(time) {
     sampler.triggerAttack(nota);
     nota *= 1.1;
   } */
-  console.log(currentBeat);
+  //console.log(currentBeat);
 }
