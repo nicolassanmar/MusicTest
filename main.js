@@ -36,16 +36,13 @@ function preload() {
   //cursormio = loadImage('cursor.png');
   playfont = loadFont("fonts/ZCOOLQingKeHuangYou-Regular.ttf");
 
-
   // //paper.js
   // paper.setup(cnv);
 }
 
-
-
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
-  cnv.parent('canvasContainer');
+  cnv.parent("canvasContainer");
   cursor("cursor.png", 8, 8);
   KICKLENGTH = 800;
 
@@ -69,9 +66,6 @@ function setup() {
 
   voiceSliderM = 0;
   voiceModifying = false;
-
-
-
 
   // //paper.js
   // paper.project.importSVG("svgs/headphones.svg", function(item) {
@@ -143,19 +137,16 @@ function draw() {
       //voice slider
       fill(to);
       rect(
-        (windowWidth * 1.61) / 2,
-        0,
-        windowWidth / 20,
-        windowHeight / 20 + voiceSliderM
+        (windowWidth * 1.61) / 2,0, windowWidth / 20,
+        windowHeight / 7 + voiceSliderM
       );
     }
     imageMode(CORNER);
     image(logo, 0, windowHeight - 70, 70, 70);
-    if (startingfade > 0){
-      background(255,startingfade);
+    if (startingfade > 0) {
+      background(255, startingfade);
       startingfade -= 3;
     }
-
   } else {
     textStyle(NORMAL);
 
@@ -168,7 +159,7 @@ function draw() {
     textAlign(CENTER);
     text("PLAY", windowWidth / 2, windowHeight / 2);
     textSize(30);
-    text("headphones recommended", windowWidth / 2, windowHeight*1.61 / 2);
+    text("headphones recommended", windowWidth / 2, (windowHeight * 1.61) / 2);
     startingfade = 255;
     //imageMode(CENTER);
     //image(headphones,windowWidth / 2, windowHeight*1.35 / 2);
@@ -176,7 +167,11 @@ function draw() {
       textStyle(BOLD);
       textSize(50);
 
-      text("Tilt your phone sideways", windowWidth / 2, windowHeight*1.8 / 2);
+      text(
+        "Tilt your phone sideways",
+        windowWidth / 2,
+        (windowHeight * 1.8) / 2
+      );
     }
   }
 }
@@ -189,6 +184,7 @@ function mousePressed() {
   if (c[0] == to.levels[0] && c[1] == to.levels[1] && c[2] == to.levels[2]) {
     voiceModifying = true;
   }
+  return false;
 }
 function mouseDragged() {
   if (voiceModifying) {
@@ -197,9 +193,11 @@ function mouseDragged() {
       2
     );
   }
+  return false;
 }
 function mouseReleased() {
   voiceModifying = false;
+  return false;
 }
 
 function playf() {
