@@ -46,7 +46,7 @@ function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   cnv.parent("canvasContainer");
   cursor("cursor.png", 8, 8);
-  KICKLENGTH = 800;
+  KICKLENGTH = 40;
 
   loopBeat = new Tone.Loop(song, "4n");
   Tone.Transport.bpm.value = 95;
@@ -154,7 +154,7 @@ function draw() {
       //   0
       // );
       // bezier(0, windowHeight, pos, pos / 4, 0, 0, windowWidth, 0);
-      // kickDraw--;
+     kickDraw--;
       pop();
 
       //voice slider
@@ -215,9 +215,23 @@ function drawRandom() {
   largoVoice = map(voiceSliderM, 0, 749, 1, 2);
   rotate(PI * rando3);
 
+
+
+  //  push();
+  //  for (let i = 0; i < sides; i++) {
+  //    fill(75);
+  //    rect(0, 0, (windowWidth * largoVoice) / 20 + 5, windowHeight / 50 + 5); //sombra
+  //    rotate((PI * 2) / sides);
+
+  //  }
+  //  pop();
+   stroke(75);
+   strokeWeight(5);
   for (let i = 0; i < sides; i++) {
-    rect(0, 0, (windowWidth * largoVoice) / 20, windowHeight / 50);
+    
+    rect(0, 0, (windowWidth * largoVoice) / 20+ pos, windowHeight / 50);
     rotate((PI * 2) / sides);
+
   }
 
   pop();
@@ -235,10 +249,7 @@ function mousePressed() {
 }
 function mouseDragged() {
   if (voiceModifying) {
-    voiceSliderM = max(
-      min((mouseY - windowHeight / 20) * 2, windowHeight * 0.8),
-      2
-    );
+    voiceSliderM = max(min((mouseY - windowHeight / 20) * 2, windowHeight * 0.8), 2);
   }
   return false;
 }
